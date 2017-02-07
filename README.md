@@ -13,6 +13,8 @@ Remake does in-tree builds so to get a clean build:
 - go to a directory where you want the tree
 - run `git clone git@github.com:reichlab/dengue-data-stub`
 - go into the repo doing `cd dengue-data-stub`
+- in scripts/setup/connect.R you might need to modify the path to 
+  your credentials file and server.
 - run `Rscript -e 'remake::make()'` to build
 - _do not add build output to the repository!!!!_
 
@@ -27,6 +29,5 @@ To edit the repository:
 - use `git push <remote> <local_branch>:<remote_branch>` to push to a
   remote branch of the repo.
 - in the github interface merge your changes with a pull request
-- in scripts/setup/connect.R you might need to modify the path to 
-  your credentials file and server.
+
 
