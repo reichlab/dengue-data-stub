@@ -1,0 +1,26 @@
+packages: 
+  - R6
+  - dplyr
+  - magrittr
+  - tidyr
+  - lubridate
+  - dengueThailand
+  - MMWRweek
+  - RPostgreSQL
+  - lazyeval
+
+include: 
+  - setup.yml
+  - data.yml
+
+targets:
+  all:
+    depends: 
+      - data_files
+
+
+
+
+
+
+

@@ -1,0 +1,65 @@
+packages:
+  - dplyr
+  - R6
+
+sources:
+  - scripts/data-processing/load-data.R
+  - scripts/data-processing/deliveries.R
+  - scripts/data-processing/disease.R
+  - scripts/data-processing/long-to-array.R
+  - scripts/data-processing/time-schemes.R
+  - scripts/data-processing/live-plot.R
+  - scripts/setup/connect.R
+
+targets:
+  data_files:
+    depends: 
+      - build/data/biweekly_province_counts.csv
+      - build/data/biweekly_district_counts.csv
+      - build/data/time_machine_biweekly_province_counts.rds
+
+  credentials:
+    command: credentials_file()
+    depends: 
+      - dir
+
+  latest_date_delivered:
+    command: latest_delivery(credentials)
+
+  deliveries:
+    command: all_deliveries(credentials)
+
+  disease:
+    command: DHF()
+
+  province_case_counts:
+    command: biweekly_province_counts(credentials, latest_date_delivered, disease)
+    depends:
+      - dir
+
+  build/data/biweekly_province_counts.csv:
+    command: write.csv(province_case_counts, file=target_name, row.names=FALSE)
+
+  district_case_counts:
+    command: biweekly_district_counts(credentials, latest_date_delivered, disease)
+    depends:
+      - dir
+
+  build/data/biweekly_district_counts.csv:
+    command: write.csv(district_case_counts, file=target_name, row.names=FALSE)
+
+  time_machine_province_case_counts:
+    command: time_machine_biweekly_province_counts(credentials, deliveries, disease)
+
+  build/data/time_machine_biweekly_province_counts.rds:
+    command: saveRDS(object=time_machine_province_case_counts, file=target_name)
+
+  build/plots/time_machine_province_plots.pdf:
+    command: all_live_province_plots('build/data/time_machine_biweekly_province_counts.rds', target_name)
+
+
+
+
+
+
+

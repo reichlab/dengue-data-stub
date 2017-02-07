@@ -1,0 +1,18 @@
+packages: 
+  - dplyr
+  - magrittr
+
+sources:
+  - scripts/setup/directories.R
+  - scripts/setup/libraries.R
+  - scripts/setup/connect.R
+
+targets:
+  dir: 
+    command: build_tree()
+ 
+
+     
+
+
+
